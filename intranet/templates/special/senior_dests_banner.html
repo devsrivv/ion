@@ -1,22 +1,8 @@
 {% load static %}
 
-{# Direct static links (mirrors tjSTAR) #}
 <link rel="stylesheet" href="{% static 'css/senior_dests_banner.css' %}">
 <script src="{% static 'js/senior_dests_banner.js' %}"></script>
 
-{# Dark‑mode overrides inline #}
-{% if dark_mode_enabled %}
-<style>
-    .senior-dests-toggle,
-    .senior-dests-content {
-        background-color: #1f1f1f;
-        border-color: #343a40;
-        color: #e6e6e6;
-    }
-</style>
-{% endif %}
-
-{# Collapsed toggle bar – starts hidden because banner loads open #}
 <div class="senior-dests-toggle" style="display:none">
     <span class="senior-dests-expand" title="Show Senior College Destinations banner">
         <i class="fas fa-chevron-down"></i>
@@ -24,7 +10,6 @@
     <b class="senior-dests-toggle-text">Senior College Destinations</b>
 </div>
 
-{# Expanded banner – starts OPEN (class "open") #}
 <div class="senior-dests-content open">
     <span class="senior-dests-collapse" title="Close Senior Destinations banner">
         <i class="fas fa-chevron-up"></i>
