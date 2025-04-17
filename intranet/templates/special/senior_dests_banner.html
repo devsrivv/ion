@@ -1,6 +1,11 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'css/senior_dests_banner.css' %}">
+{% if dark_mode_enabled %}
+    <link rel="stylesheet" href="{% static 'css/dark/senior_dests_banner.css' %}">
+{% else %}
+    <link rel="stylesheet" href="{% static 'css/senior_dests_banner.css' %}">
+{% endif %}
+
 <script src="{% static 'js/senior_dests_banner.js' %}"></script>
 
 <div class="senior-dests-toggle" style="display:none">

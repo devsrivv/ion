@@ -1,22 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const toggleBar   = document.querySelector(".senior-dests-toggle");
-    const contentBox  = document.querySelector(".senior-dests-content");
+    const $toggleBar  = $(".senior-dests-toggle");
+    const $contentBox = $(".senior-dests-content");
 
-    if (!toggleBar || !contentBox)
-        return;
+    if (!$toggleBar.length || !$contentBox.length) return;
 
-    const expandBtn   = toggleBar.querySelector(".senior-dests-expand");
-    const collapseBtn = contentBox.querySelector(".senior-dests-collapse");
+    const $expandBtn   = $toggleBar.find(".senior-dests-expand");
+    const $collapseBtn = $contentBox.find(".senior-dests-collapse");
 
-
-    expandBtn.addEventListener("click", () => {
-        contentBox.classList.add("open");
-        toggleBar.style.display = "none";
+    $expandBtn.on("click", () => {
+        $contentBox.stop(true, true).slideDown(200).addClass("open");
+        $toggleBar.hide();
     });
 
-
-    collapseBtn.addEventListener("click", () => {
-        contentBox.classList.remove("open");
-        toggleBar.style.display = "flex";
+    $collapseBtn.on("click", () => {
+        $contentBox.stop(true, true).slideUp(200, () => {
+            $contentBox.removeClass("open");
+            $toggleBar.show();
+        });
     });
 });

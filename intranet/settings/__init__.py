@@ -25,8 +25,7 @@ YEAR_TURNOVER_MONTH = 7
 # School years span 2 calendar years.
 # start_school_year is the year the school year starts in, and end_school_year is the year the school year ends in.
 # For example, for the 2022-2023 school year, start_school_year = 2022 and end_school_year = 2023.
-start_school_year = datetime.date.today().year - \
-    1 if datetime.date.today().month < YEAR_TURNOVER_MONTH else datetime.date.today().year
+start_school_year = datetime.date.today().year - 1 if datetime.date.today().month < YEAR_TURNOVER_MONTH else datetime.date.today().year
 end_school_year = start_school_year + 1
 
 # fmt: off
@@ -108,18 +107,14 @@ NOMINATIONS_ACTIVE = False
 NOMINATION_POSITION = ""
 
 # App and functionality availability toggles
-# Eighth waitlist. WARNING: Enabling the waitlist causes severe performance issues
-ENABLE_WAITLIST = False
+ENABLE_WAITLIST = False  # Eighth waitlist. WARNING: Enabling the waitlist causes severe performance issues
 
 ENABLE_BUS_APP = True
 ENABLE_BUS_DRIVER = True
 
-# Redirect to eighth signup page after login if the user isn't signed up for activities
-ENABLE_PRE_EIGHTH_CLOSE_SIGNUP_REDIRECT = False
-# Redirect to eighth_location around eighth period (increase performance during peak times)
-ENABLE_PRE_EIGHTH_LOCATION_REDIRECT = True
-# Redirect to bus page around dismissal
-ENABLE_PRE_DISMISSAL_BUS_REDIRECT = True
+ENABLE_PRE_EIGHTH_CLOSE_SIGNUP_REDIRECT = False  # Redirect to eighth signup page after login if the user isn't signed up for activities
+ENABLE_PRE_EIGHTH_LOCATION_REDIRECT = True  # Redirect to eighth_location around eighth period (increase performance during peak times)
+ENABLE_PRE_DISMISSAL_BUS_REDIRECT = True  # Redirect to bus page around dismissal
 
 ENABLE_HYBRID_EIGHTH = None  # Enable hybrid eighth period code
 
@@ -130,8 +125,7 @@ ENABLE_SENIOR_DESTINATIONS = False  # Disabled per school policy, October 2023
 
 NOTIFY_ADMIN_EMAILS = None
 
-# Attempting to OAuth to an application with one of these client IDs will result in a *special* error message
-IOS_APP_CLIENT_IDS = []
+IOS_APP_CLIENT_IDS = []  # Attempting to OAuth to an application with one of these client IDs will result in a *special* error message
 # See templates/oauth2_provider/authorize.html
 
 ALLOWED_METRIC_SCRAPE_IPS = []
@@ -144,12 +138,10 @@ EMERGENCY_MESSAGE = None  # type: str
 # In production, Nginx filters requests that are not in this list. If this is
 # not done, a notification gets sent whenever someone messes with
 # the HTTP Host header.
-ALLOWED_HOSTS = ["ion.tjhsst.edu", "198.38.18.250",
-                 "localhost", ".local", "127.0.0.1"]
+ALLOWED_HOSTS = ["ion.tjhsst.edu", "198.38.18.250", "localhost", ".local", "127.0.0.1"]
 
 PRODUCTION = os.getenv("PRODUCTION", "").upper() == "TRUE"
-IN_CI = any(os.getenv(key, "").upper() ==
-            "TRUE" for key in ["TRAVIS", "GITHUB_ACTIONS"])
+IN_CI = any(os.getenv(key, "").upper() == "TRUE" for key in ["TRAVIS", "GITHUB_ACTIONS"])
 # FIXME: figure out a less-hacky way to do this.
 TESTING = any("test" in arg for arg in sys.argv)
 LOGGING_VERBOSE = PRODUCTION
@@ -172,8 +164,7 @@ FORCE_EMAIL_SEND = False
 SESSION_COOKIE_SECURE = PRODUCTION
 CSRF_COOKIE_SECURE = PRODUCTION
 
-# Set to a random value in production. Used for balancer rate limiting.
-ION_AUTHENTICATED_COOKIE_VALUE = "ion_dev_test"
+ION_AUTHENTICATED_COOKIE_VALUE = "ion_dev_test"  # Set to a random value in production. Used for balancer rate limiting.
 
 if not PRODUCTION:
     # We don't care about session security when running a testing instance.
@@ -191,8 +182,7 @@ if not PRODUCTION:
 INTERNAL_IPS = helpers.GlobList(_internal_ip_list)
 
 # Used for Printing access; FCPS external/internal IP ranges
-_tj_ip_list = _internal_ip_list + \
-    ["151.188.0.0/18", "151.188.192.0/18", "10.0.0.0/8", "172.16.0.0/12"]
+_tj_ip_list = _internal_ip_list + ["151.188.0.0/18", "151.188.192.0/18", "10.0.0.0/8", "172.16.0.0/12"]
 
 TJ_IPS = helpers.GlobList(_tj_ip_list)
 
@@ -218,8 +208,7 @@ EMAIL_ANNOUNCEMENTS = True
 EMAIL_FROM = "ion-noreply@tjhsst.edu"
 
 # Use PostgreSQL database
-DATABASES = {"default": {"ENGINE": "django_prometheus.db.backends.postgresql",
-                         "CONN_MAX_AGE": 30}}  # type: Dict[str,Dict[str,Any]]
+DATABASES = {"default": {"ENGINE": "django_prometheus.db.backends.postgresql", "CONN_MAX_AGE": 30}}  # type: Dict[str,Dict[str,Any]]
 
 # Address to send feedback messages to
 FEEDBACK_EMAIL = "intranet@tjhsst.edu"
@@ -227,8 +216,7 @@ FEEDBACK_EMAIL = "intranet@tjhsst.edu"
 # Address to send approval messages to
 APPROVAL_EMAIL = "intranet-approval@tjhsst.edu"
 
-FILE_UPLOAD_HANDLERS = ["django.core.files.uploadhandler.MemoryFileUploadHandler",
-                        "django.core.files.uploadhandler.TemporaryFileUploadHandler"]
+FILE_UPLOAD_HANDLERS = ["django.core.files.uploadhandler.MemoryFileUploadHandler", "django.core.files.uploadhandler.TemporaryFileUploadHandler"]
 
 # The maximum number of pages in one document that can be
 # printed through the printing functionality (determined through pdfinfo)
@@ -395,6 +383,7 @@ LIST_OF_INDEPENDENT_CSS = [
     "dark/enrichment",
     "dark/dashboard",
     "dark/dashboard.widgets",
+    "dark/senior_dests_banner",
     "dark/schedule.widget",
     "dark/nav",
     "dark/cke",
@@ -427,8 +416,7 @@ AUTHENTICATION_BACKENDS = [
 
 # The Alpine dev env doesn't work well with PAM
 if not PRODUCTION:
-    AUTHENTICATION_BACKENDS.remove(
-        "intranet.apps.auth.backends.PamAuthenticationBackend")
+    AUTHENTICATION_BACKENDS.remove("intranet.apps.auth.backends.PamAuthenticationBackend")
 
 # Default to Argon2, see https://docs.djangoproject.com/en/dev/topics/auth/passwords/#argon2-usage
 PASSWORD_HASHERS = [
@@ -448,40 +436,26 @@ TEMPLATES = [
         "DIRS": (os.path.join(PROJECT_ROOT, "templates"),),
         "OPTIONS": {
             "context_processors": (
-                # Authentication; must be defined first
-                "django.contrib.auth.context_processors.auth",
+                "django.contrib.auth.context_processors.auth",  # Authentication; must be defined first
                 "django.template.context_processors.debug",  # Django default
                 "django.template.context_processors.request",  # Django default
                 "django.contrib.messages.context_processors.messages",  # For page messages
                 "intranet.apps.context_processors.ion_base_url",  # For determining the base url
-                # For determining the category in the navbar
-                "intranet.apps.context_processors.nav_categorizer",
-                # For showing a list of CSL apps in the navbar
-                "intranet.apps.context_processors.csl_apps",
-                # For showing a global warning throughout the application (in page_base.html)
-                "intranet.apps.context_processors.global_warning",
-                # For determining the eighth pd start date
-                "intranet.apps.eighth.context_processors.start_date",
-                # For showing the absence count in the navbar
-                "intranet.apps.eighth.context_processors.absence_count",
-                # For checking if the waitlist is enabled
-                "intranet.apps.eighth.context_processors.enable_waitlist",
-                # For the custom android app functionality (tbd?)
-                "intranet.apps.context_processors.mobile_app",
-                # Whether on the internal TJ or FCPS network
-                "intranet.apps.context_processors.is_tj_ip",
-                # Sitewide custom themes (special events, etc)
-                "intranet.apps.context_processors.show_homecoming",
-                # Sitewide custom themes (special events, etc)
-                "intranet.apps.context_processors.global_custom_theme",
+                "intranet.apps.context_processors.nav_categorizer",  # For determining the category in the navbar
+                "intranet.apps.context_processors.csl_apps",  # For showing a list of CSL apps in the navbar
+                "intranet.apps.context_processors.global_warning",  # For showing a global warning throughout the application (in page_base.html)
+                "intranet.apps.eighth.context_processors.start_date",  # For determining the eighth pd start date
+                "intranet.apps.eighth.context_processors.absence_count",  # For showing the absence count in the navbar
+                "intranet.apps.eighth.context_processors.enable_waitlist",  # For checking if the waitlist is enabled
+                "intranet.apps.context_processors.mobile_app",  # For the custom android app functionality (tbd?)
+                "intranet.apps.context_processors.is_tj_ip",  # Whether on the internal TJ or FCPS network
+                "intranet.apps.context_processors.show_homecoming",  # Sitewide custom themes (special events, etc)
+                "intranet.apps.context_processors.global_custom_theme",  # Sitewide custom themes (special events, etc)
                 "intranet.apps.context_processors.show_bus_button",
                 "intranet.apps.context_processors.enable_dark_mode",
-                # Django OAuth Toolkit-related middleware
-                "intranet.apps.context_processors.oauth_toolkit",
-                # "Exports" django.conf.settings as DJANGO_SETTINGS
-                "intranet.apps.context_processors.settings_export",
-                # Feature announcements that need to be shown on the current page
-                "intranet.apps.features.context_processors.feature_announcements",
+                "intranet.apps.context_processors.oauth_toolkit",  # Django OAuth Toolkit-related middleware
+                "intranet.apps.context_processors.settings_export",  # "Exports" django.conf.settings as DJANGO_SETTINGS
+                "intranet.apps.features.context_processors.feature_announcements",  # Feature announcements that need to be shown on the current page
             ),
             "debug": True,  # Only enabled if DEBUG is true as well
             "loaders": ("django.template.loaders.filesystem.Loader", "django.template.loaders.app_directories.Loader"),
@@ -492,8 +466,7 @@ TEMPLATES = [
 
 if PRODUCTION:
     TEMPLATES[0]["OPTIONS"]["loaders"] = [
-        ("django.template.loaders.cached.Loader", [
-         "django.template.loaders.filesystem.Loader", "django.template.loaders.app_directories.Loader"])
+        ("django.template.loaders.cached.Loader", ["django.template.loaders.filesystem.Loader", "django.template.loaders.app_directories.Loader"])
     ]
 
 if not PRODUCTION and os.getenv("WARN_INVALID_TEMPLATE_VARS", "NO") == "YES":
@@ -501,8 +474,7 @@ if not PRODUCTION and os.getenv("WARN_INVALID_TEMPLATE_VARS", "NO") == "YES":
 
 MIDDLEWARE = [
     "intranet.middleware.url_slashes.FixSlashes",  # Remove slashes in URLs
-    # 401s requests with an "Origin" header that doesn't match the "Host" header
-    "intranet.middleware.same_origin.SameOriginMiddleware",
+    "intranet.middleware.same_origin.SameOriginMiddleware",  # 401s requests with an "Origin" header that doesn't match the "Host" header
     "django_prometheus.middleware.PrometheusBeforeMiddleware",  # Django Prometheus initial
     "django.middleware.common.CommonMiddleware",  # Django default
     "django.contrib.sessions.middleware.SessionMiddleware",  # Django sessions
@@ -510,27 +482,23 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",  # Django X-Frame-Options
     "django.contrib.auth.middleware.AuthenticationMiddleware",  # Django auth
     "oauth2_provider.middleware.OAuth2TokenMiddleware",  # Django Oauth toolkit
-    # Restricts access to Django Prometheus metrics to ALLOWED_METRIC_IPS and superusers
-    "intranet.middleware.monitoring.PrometheusAccessMiddleware",
+    "intranet.middleware.monitoring.PrometheusAccessMiddleware",  # Restricts access to Django Prometheus metrics to ALLOWED_METRIC_IPS and superusers
     "maintenance_mode.middleware.MaintenanceModeMiddleware",  # Maintenance mode
     "intranet.middleware.threadlocals.ThreadLocalsMiddleware",  # Thread locals
     "intranet.middleware.traceback.UserTracebackMiddleware",  # Include user in traceback
     "django.contrib.messages.middleware.MessageMiddleware",  # Messages
     "django_user_agents.middleware.UserAgentMiddleware",
-    # Handles session management (might log the user out, so must be early)
-    "intranet.middleware.session_management.SessionManagementMiddleware",
+    "intranet.middleware.session_management.SessionManagementMiddleware",  # Handles session management (might log the user out, so must be early)
     "intranet.middleware.ajax.AjaxNotAuthenticatedMiddleWare",  # See note in ajax.py
     "intranet.middleware.templates.AdminSelectizeLoadingIndicatorMiddleware",  # Selectize fixes
-    # Prevent malicious JS from changing the referring page
-    "intranet.middleware.templates.NoReferrerMiddleware",
+    "intranet.middleware.templates.NoReferrerMiddleware",  # Prevent malicious JS from changing the referring page
     "intranet.middleware.access_log.AccessLogMiddleWare",  # Access log
     "django_requestlogging.middleware.LogSetupMiddleware",  # Request logging
     "corsheaders.middleware.CorsMiddleware",  # CORS headers, for ext. API use
     "simple_history.middleware.HistoryRequestMiddleware",
     "django_prometheus.middleware.PrometheusAfterMiddleware",  # Django Prometheus after
     "intranet.middleware.dark_mode.DarkModeMiddleware",  # Dark mode-related middleware
-    # Sets the Referrer-Policy header
-    "django_referrer_policy.middleware.ReferrerPolicyMiddleware",
+    "django_referrer_policy.middleware.ReferrerPolicyMiddleware",  # Sets the Referrer-Policy header
 ]
 
 if not PRODUCTION and not DEBUG:
@@ -548,8 +516,7 @@ ROOT_URLCONF = "intranet.urls"
 WSGI_APPLICATION = "intranet.wsgi.application"
 
 # Name of current virtualenv
-VIRTUAL_ENV = os.path.basename(
-    os.environ["VIRTUAL_ENV"]) if "VIRTUAL_ENV" in os.environ else "None"
+VIRTUAL_ENV = os.path.basename(os.environ["VIRTUAL_ENV"]) if "VIRTUAL_ENV" in os.environ else "None"
 
 
 def get_month_seconds():
@@ -579,18 +546,14 @@ if not PRODUCTION and os.getenv("SHORT_CACHE", "NO") == "YES":
 
 # Cacheops configuration
 # may be removed in the future
-CACHEOPS_REDIS = {"host": "127.0.0.1",
-                  "port": 6379, "db": 1, "socket_timeout": 1}
+CACHEOPS_REDIS = {"host": "127.0.0.1", "port": 6379, "db": 1, "socket_timeout": 1}
 
 CACHEOPS = {
-    # Only used for caching activity, block lists
-    "eighth.*": {"timeout": int(datetime.timedelta(hours=24).total_seconds())},
-    # Only used for caching group list
-    "groups.*": {"timeout": int(datetime.timedelta(hours=24).total_seconds())},
+    "eighth.*": {"timeout": int(datetime.timedelta(hours=24).total_seconds())},  # Only used for caching activity, block lists
+    "groups.*": {"timeout": int(datetime.timedelta(hours=24).total_seconds())},  # Only used for caching group list
     "users.UserDarkModeProperties": {"ops": "get", "timeout": int(datetime.timedelta(minutes=10).total_seconds())},
     "features.FeatureAnnouncement": {"ops": "all", "timeout": int(datetime.timedelta(hours=1).total_seconds())},
-    # Allow manual caching on everything else with a default timeout of 5 seconds
-    "*.*": {"ops": (), "timeout": 5},
+    "*.*": {"ops": (), "timeout": 5},  # Allow manual caching on everything else with a default timeout of 5 seconds
 }
 
 if not TESTING:
@@ -604,8 +567,7 @@ if not TESTING:
     SESSION_REDIS_PORT = 6379
     SESSION_REDIS_DB = 0
     SESSION_REDIS_PREFIX = "ion:session"
-    SESSION_REDIS = {"host": SESSION_REDIS_HOST, "port": SESSION_REDIS_PORT,
-                     "db": SESSION_REDIS_DB, "prefix": SESSION_REDIS_PREFIX}
+    SESSION_REDIS = {"host": SESSION_REDIS_HOST, "port": SESSION_REDIS_PORT, "db": SESSION_REDIS_DB, "prefix": SESSION_REDIS_PREFIX}
 
     SESSION_COOKIE_AGE = int(datetime.timedelta(hours=2).total_seconds())
     SESSION_SAVE_EVERY_REQUEST = True
@@ -638,8 +600,7 @@ FCPS_STUDENT_ID_LENGTH = 7
 # Django REST framework configuration
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": (
-        # require authentication and deny restricted users
-        "intranet.apps.auth.rest_permissions.DenyRestrictedPermission",
+        "intranet.apps.auth.rest_permissions.DenyRestrictedPermission",  # require authentication and deny restricted users
     ),
     "USE_ABSOLUTE_URLS": True,
     # Return native `Date` and `Time` objects in `serializer.data`
@@ -651,8 +612,7 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 50,
     "DEFAULT_AUTHENTICATION_CLASSES": (
         # "intranet.apps.api.authentication.ApiBasicAuthentication",  # Disabled for security
-        # exempts CSRF checking on API
-        "intranet.apps.api.authentication.CsrfExemptSessionAuthentication",
+        "intranet.apps.api.authentication.CsrfExemptSessionAuthentication",  # exempts CSRF checking on API
         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
     ),
 }
@@ -741,8 +701,7 @@ INSTALLED_APPS = [
 ]
 
 # Django Channels Configuration (we use this for websockets)
-CHANNEL_LAYERS = {"default": {"BACKEND": "channels_redis.core.RedisChannelLayer", "CONFIG": {
-    "hosts": [("127.0.0.1", 6379)]}}}
+CHANNEL_LAYERS = {"default": {"BACKEND": "channels_redis.core.RedisChannelLayer", "CONFIG": {"hosts": [("127.0.0.1", 6379)]}}}
 
 ASGI_APPLICATION = "intranet.routing.application"
 
@@ -867,8 +826,7 @@ if SHOW_DEBUG_TOOLBAR:
 
     # Disable all panels by default in development for performance
     if not PRODUCTION:
-        DEBUG_TOOLBAR_CONFIG["DISABLE_PANELS"] = [
-            panel for panel, _ in _panels]
+        DEBUG_TOOLBAR_CONFIG["DISABLE_PANELS"] = [panel for panel, _ in _panels]
 
     DEBUG_TOOLBAR_PANELS = [t[0] for t in _panels]
 
@@ -916,10 +874,8 @@ GIT = {
 # The year will be replaced as appropriate (determined in
 # intranet/utils/date.py based on YEAR_TURNOVER_MONTH).
 SENIOR_GRADUATION_YEAR = end_school_year
-SENIOR_GRADUATION_DATE = datetime.datetime(
-    year=SENIOR_GRADUATION_YEAR, month=6, day=3, hour=9)
-SENIOR_GRADUATION = datetime.datetime(
-    year=SENIOR_GRADUATION_YEAR, month=6, day=3, hour=9).strftime("%B %d %Y %H:%M:%S")
+SENIOR_GRADUATION_DATE = datetime.datetime(year=SENIOR_GRADUATION_YEAR, month=6, day=3, hour=9)
+SENIOR_GRADUATION = datetime.datetime(year=SENIOR_GRADUATION_YEAR, month=6, day=3, hour=9).strftime("%B %d %Y %H:%M:%S")
 
 # The number of days out at which a user is deemed "near graduation".
 NEAR_GRADUATION_DAYS = 50
@@ -955,8 +911,7 @@ BUS_PAGE_CHANGEOVER_HOUR = 12
 # Substrings of user agents to not log in the Ion access logs
 NONLOGGABLE_USER_AGENT_SUBSTRINGS = ["Prometheus", "GoogleBot", "UptimeRobot"]
 NONLOGGABLE_PATH_BEGINNINGS = ["/static"]
-NONLOGGABLE_PATH_ENDINGS = [".png", ".jpg",
-                            ".jpeg", ".gif", ".css", ".js", ".ico", "jsi18n/"]
+NONLOGGABLE_PATH_ENDINGS = [".png", ".jpg", ".jpeg", ".gif", ".css", ".js", ".ico", "jsi18n/"]
 
 # The location of the Celery broker (message transport)
 CELERY_BROKER_URL = "amqp://localhost"
@@ -1033,22 +988,17 @@ if TESTING:
     # Horrible hack to suppress all migrations to speed up the tests.
     MIGRATION_MODULES = helpers.MigrationMock()
     # FIXME: we really shouldn't have to do this.
-    LOGGING_VERBOSE = re.search(
-        "-v ?[2-3]|--verbosity [2-3]", " ".join(sys.argv)) is not None
+    LOGGING_VERBOSE = re.search("-v ?[2-3]|--verbosity [2-3]", " ".join(sys.argv)) is not None
 elif PRODUCTION or SECRET_DATABASE_URL is not None:
     DATABASES["default"].update(helpers.parse_db_url(SECRET_DATABASE_URL))
 else:
     # Default testing db config.
-    DATABASES["default"].update(
-        {"NAME": "ion", "USER": "ion", "PASSWORD": "pwd"})
+    DATABASES["default"].update({"NAME": "ion", "USER": "ion", "PASSWORD": "pwd"})
 
 # Set up sentry logging
 if PRODUCTION:
     # This is implicitly set up but we do this just in case
     sentry_logging = LoggingIntegration(
-        # Capture info and above as breadcrumbs  # Send errors as events
-        level=logging.INFO,
-        event_level=logging.ERROR,
+        level=logging.INFO, event_level=logging.ERROR  # Capture info and above as breadcrumbs  # Send errors as events
     )
-    sentry_sdk.init(SENTRY_PUBLIC_DSN, integrations=[DjangoIntegration(
-    ), sentry_logging, CeleryIntegration()], send_default_pii=True)
+    sentry_sdk.init(SENTRY_PUBLIC_DSN, integrations=[DjangoIntegration(), sentry_logging, CeleryIntegration()], send_default_pii=True)
